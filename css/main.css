@@ -1,0 +1,16 @@
+/* CSS Document */
+/*
+#map-canvas {
+	width:66%;
+	height:calc(100% - 0);
+	position:absolute;
+	left:16px;
+	top:70px;
+	bottom:0;
+	overflow:hidden;
+}
+*/
+#map-canvas{
+	height:600px;
+	width:100%;	
+}
