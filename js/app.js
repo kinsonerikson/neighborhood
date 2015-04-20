@@ -29,7 +29,6 @@ var Marker = function(name,lat,lng){
 	};
 	this.pos = this.addMarker();
 	this.getNews = function(){
-		//6d56f3e061aaf263385ce087d9f3b906:13:71762457
 		var url = "http://api.nytimes.com/svc/search/v2/articlesearch.json?";
 		url+="q="+this.name;
 		url+='&fq=glocations:("LONDON"),pub_year:2015';
@@ -60,19 +59,12 @@ var Marker = function(name,lat,lng){
 	
 }
 var ViewModel = function(){
-	var that = this;
+	var that = this;		
 	var mapOptions = {
 		center: { lat: 51.4999600, lng: -0.1260000},
 		zoom: 17
 	};
-	map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
-	that.addMarker = function(loc){
-		var marker = new google.maps.Marker({
-			position: { lat: loc.lat, lng: loc.lng},
-			map: map
-		});
-		return marker;
-	};
+	map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);	
 	var initMarkers = [
 		new Marker('Big Ben',51.500729,-0.124625),
 		new Marker('Westminster Abbey',51.499292,-0.12731),
@@ -80,6 +72,12 @@ var ViewModel = function(){
 		new Marker('House of Commons',51.499794,-0.124693),
 		new Marker('10 Downing Street',51.503312,-0.127624)
 	];
+	that.filterMarkers = function(){
+		//console.log(that.searchString());	
+		console.log('derp');
+		return that.searchString();
+	}
+	that.searchString = ko.observable("");
 	that.markers = ko.observableArray(initMarkers);	
 };
 
