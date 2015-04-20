@@ -41,7 +41,7 @@ var Marker = function(name,lat,lng){
 	//As part of the filtering in the ViewModel, this will add the marker to the map, essentially "Showing" it.
 	that.showMarker = function(){
 		that.pos.setMap(map);	
-	}
+	};
 	
 	//This will show the info window when the marker or list item is clicked.
 	that.showInfo = function(){		
@@ -82,7 +82,7 @@ var Marker = function(name,lat,lng){
 		}).fail(function(msg){
 			that.info.content = that.info.content.replace('{{headlines}}','Unable to load headlines.');
 		});
-	}
+	};
 	
 	//Calls the getNews function to initialize our news content.
 	that.getNews();
@@ -112,7 +112,7 @@ var Marker = function(name,lat,lng){
 			for(var i=0;i<loopCount;i++){
 				var p = photos[i];
 				//headlines+='<a href="'+a.web_url+'" target="_blank" class="list-group-item">'+a.headline.main+'</a>';
-				imgUrl= "https://farm"+p.farm+".staticflickr.com/"+p.server+"/"+p.id+"_"+p.secret+"_t.jpg";
+				var imgUrl= "https://farm"+p.farm+".staticflickr.com/"+p.server+"/"+p.id+"_"+p.secret+"_t.jpg";
 				var img = '<a href="'+imgUrl.replace('_t','')+'" target="_blank">';
 				img+= '<img src="'+imgUrl;				
 				img+='"></a>&nbsp;';
@@ -124,10 +124,10 @@ var Marker = function(name,lat,lng){
 		}).fail(function(msg){
 			that.info.content = that.info.content.replace('{{images}}','Unable to load images.');
 		});
-	}
+	};
 	
 	that.getImages();
-}
+};
 
 //The ViewModel object that will get bound to knockout
 var ViewModel = function(){
@@ -143,7 +143,7 @@ var ViewModel = function(){
 		map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
 		var trafficLayer = new google.maps.TrafficLayer();
 		trafficLayer.setMap(map);
-	}
+	};
 	
 	//Need to call the map before we can bind the markers
 	that.initializeMap();
@@ -164,7 +164,7 @@ var ViewModel = function(){
 	//Directly observe the searchString so we can hide/show the markers and list items that match		
 	that.searchString.subscribe(function(searchValue){
 		//Don't try to search on an empty string!
-		if(searchValue != ''){
+		if(searchValue !== ''){
 			//Loop through all of the markers...
 			for(var i=0;i<that.markers().length;i++){
 				var m = that.markers()[i];
@@ -182,9 +182,9 @@ var ViewModel = function(){
 		}
 		//Make sure that everything is visible if they clear out the search box.
 		else{
-			for(var i=0;i<that.markers().length;i++){
-				that.markers()[i].visible(true);
-				that.markers()[i].showMarker();
+			for(var j=0;j<that.markers().length;j++){
+				that.markers()[j].visible(true);
+				that.markers()[j].showMarker();
 			}
 		}
 	});	

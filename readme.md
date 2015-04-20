@@ -2,6 +2,10 @@
 <p>
 	This map displays an area that I would like to visit some day. I have added markers to locations that have some history/tourist interest.
 </p>
+<h4>How to Run</h4>
+<p>
+	Click on index.html, let it load, and interact! Instructions on how to use are below.
+</p>
 <h4>How to Use</h4>
 <p>
 	Click on any of the markers on the map or any of the items in the "Locations" list
