@@ -1,5 +1,6 @@
 //In order to initialize the map and the markers we have to go global
 var map;
+
 //The Marker constructor will generate a marker at the coordiantes provided and setup the initial info about the marker
 var Marker = function(name,lat,lng){
 	//Setup our initial values based on the ones passed in and default the visiblity to true.
@@ -95,7 +96,7 @@ var Marker = function(name,lat,lng){
 	
 	that.getImages = function(){
 		var url = "https://api.flickr.com/services/rest/?method=flickr.photos.search";
-		url+="&api_key=d648c4834c3bcc5dbf31a82daf8be560";
+		url+="&api_key=3eec8e2a231986010584d2fe7855aa3d";
 		url+="&tags="+that.name;
 		url+="&per_page=5&page=1&format=json&nojsoncallback=1";
 		$.ajax({
@@ -129,6 +130,18 @@ var Marker = function(name,lat,lng){
 	that.getImages();
 };
 
+//Setup the Markers in a seperate model variable to call later.
+var model = function(){
+	markers: [
+			new Marker('Big Ben',51.500729,-0.124625),
+			new Marker('Westminster Abbey',51.499292,-0.12731),
+			new Marker('Westminster Bridge',51.500875,-0.122329),
+			new Marker('House of Commons',51.499794,-0.124693),
+			new Marker('10 Downing Street',51.503312,-0.127624)	
+	]
+};
+
+
 //The ViewModel object that will get bound to knockout
 var ViewModel = function(){
 	//set that = this so we always have the right context for our bindings.
@@ -148,15 +161,8 @@ var ViewModel = function(){
 	//Need to call the map before we can bind the markers
 	that.initializeMap();
 	
-	//This initial array creates each of the markers as Marker objects and is then passed in as an observable.
-	var initMarkers = [
-		new Marker('Big Ben',51.500729,-0.124625),
-		new Marker('Westminster Abbey',51.499292,-0.12731),
-		new Marker('Westminster Bridge',51.500875,-0.122329),
-		new Marker('House of Commons',51.499794,-0.124693),
-		new Marker('10 Downing Street',51.503312,-0.127624)
-	];	
-	that.markers = ko.observableArray(initMarkers);
+	//Grab the markers from the model and make them observable.
+	that.markers = ko.observableArray(model.markers);
 	
 	//Setup our string to use as the search filter.
 	that.searchString = ko.observable("");
