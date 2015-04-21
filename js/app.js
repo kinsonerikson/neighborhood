@@ -131,16 +131,15 @@ var Marker = function(name,lat,lng){
 };
 
 //Setup the Markers in a seperate model variable to call later.
-var model = function(){
+var model = {
 	markers: [
-			new Marker('Big Ben',51.500729,-0.124625),
-			new Marker('Westminster Abbey',51.499292,-0.12731),
-			new Marker('Westminster Bridge',51.500875,-0.122329),
-			new Marker('House of Commons',51.499794,-0.124693),
-			new Marker('10 Downing Street',51.503312,-0.127624)	
+		{title:'Big Ben',lat:51.500729,lng:-0.124625},
+		{title:'Westminster Abbey',lat:51.499292,lng:-0.12731},
+		{title:'Westminster Bridge',lat:51.500875,lng:-0.122329},
+		{title:'House of Commons',lat:51.499794,lng:-0.124693},
+		{title:'10 Downing Street',lat:51.503312,lng:-0.127624}	
 	]
 };
-
 
 //The ViewModel object that will get bound to knockout
 var ViewModel = function(){
@@ -161,8 +160,14 @@ var ViewModel = function(){
 	//Need to call the map before we can bind the markers
 	that.initializeMap();
 	
-	//Grab the markers from the model and make them observable.
-	that.markers = ko.observableArray(model.markers);
+	//Grab the marker data from the model, convert to Marker objects, and make them observable.
+	var tempMarkers = model.markers;
+	var markerObjs = [];
+	for(var i=0;i<tempMarkers.length;i++){
+		var obj = new Marker(tempMarkers[i].title,tempMarkers[i].lat,tempMarkers[i].lng);
+		markerObjs.push(obj);	
+	}
+	that.markers = ko.observableArray(markerObjs);
 	
 	//Setup our string to use as the search filter.
 	that.searchString = ko.observable("");
@@ -175,7 +180,7 @@ var ViewModel = function(){
 			for(var i=0;i<that.markers().length;i++){
 				var m = that.markers()[i];
 				//...and if the search string is in the marker's name show it ...
-				if(m.name.indexOf(searchValue) >=0){
+				if(m.name.toLowerCase().indexOf(searchValue.toLowerCase()) >=0){
 					m.visible(true);
 					m.showMarker();
 				}
